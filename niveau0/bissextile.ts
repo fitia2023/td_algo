@@ -14,7 +14,7 @@ function is_leap(annee: number): boolean {
     if (annee % 4 == 0) {
         if (annee % 100 == 0) {
             res = annee % 400 == 0
-        }else{
+        } else {
             res = true
         }
 
