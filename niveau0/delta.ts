@@ -9,7 +9,7 @@ import readlineSync from 'readline-sync'
 
 
 // pour fonction polynome de ax²+bx+c retorne delta
-function delta(a: number, b: number, c: number): number {  
+export function delta(a: number, b: number, c: number): number {  
     return b ** 2 - (4 * a * c)
 }
 
