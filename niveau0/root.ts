@@ -11,7 +11,7 @@ import { delta } from './delta'
 
 
 // ax²+bx+c , retourn soit vide ou valeur
-function root(a: number, b: number, c: number): number | number[] {
+function root(a: number, b: number, c: number): number[] {
     const d = delta(a, b, c)
     if (d > 0) {
         let x1 = (-b - Math.sqrt(d)) / (2 * a)
@@ -19,7 +19,7 @@ function root(a: number, b: number, c: number): number | number[] {
         return [x1, x2]
     } else {
         if (d == 0) {
-            return -b / (2 * a)
+            return [-b / (2 * a)]
         } else {
             return []
         }
