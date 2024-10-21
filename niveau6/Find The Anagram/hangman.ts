@@ -17,12 +17,26 @@ La partie se termine si le joueur n'a plus de vie ou s'il a trouvé toutes les l
 
 // import des modules 
 import * as fs from 'fs';
-import { toUnicode } from 'punycode';
 import * as  readlineSync from 'readline-sync';
 
 
 function get_words(path: string): string[] {
     return fs.readFileSync(path, 'utf-8').split('\n')
+}
+
+function word_melange(word: string): string {
+    let res: string = ''
+    let w = word.split('', word.length - 1)
+    for (let i = 0; i < w.length; i++) {
+        let index = Math.floor(Math.random() * (w.length - i) + i)
+        res += w[index]
+
+        let tmps = w[i]
+        w[i] = w[index]
+        w[index] = tmps
+    }
+
+    return res
 }
 
 function random_word(words: string[]): string {
@@ -38,50 +52,28 @@ function game() {
     )
 
     let vie: number = 6
+    let w = word_melange(word)
 
-    let letter_guess: string[] = []
+    let word_guess: string[] = []
 
-    let head_word = "_".repeat(word.length - 1).split('')
-
-    let nb_restant = word.length - 1
-
-    while (vie > 0 && head_word.includes("_")) {
+    while (vie > 0) {
         // console.clear()
         console.log("Nombre de vie:", vie)
         console.log(HANGMAN_PICS[6 - vie])
-        console.log("Mot restant de ", nb_restant, " lettres:", head_word.join(' '))
-        let input = readlineSync.question("Entrez une lettre:").toLocaleLowerCase()
+        console.log("Mot melange:", w)
+        let input: string = readlineSync.question("Entrez le mot:").toLocaleLowerCase()
 
-        if (letter_guess.includes(input)) {
-
-            console.log("\nLettre deja prise essayer une autre\n")
-
-        } else if (word.includes(input)) {
-
-            letter_guess.push(input)
-            nb_restant--
-            for (let i = 0; i < word.length; i++) {
-                if (word[i] == input) {
-                    head_word[i] = input
-                }
-            }
-
+        if (word_guess.includes(input)) {
+            console.log("Mot deja ecrit")
+        } else if (input == word.trim()) {
+            console.log("Felicitation le mot est trouve:", word)
+            break
         } else {
-            letter_guess.push(input)
-            console.log("\nIncorrecte\n")
+            console.log("\nIncorrect essaye encore\n")
+            word_guess.push(input)
             vie--
         }
-
-        if (nb_restant == 0) {
-            console.log("\nFelicitation mot trouve:", word)
-            break
-        }
-
-        if (vie == 0) {
-            console.log("Vous avez perdu")
-            console.log(HANGMAN_PICS[6])
-            console.log("le mot :", word)
-        }
+        if (vie == 0) console.log("\nPerdu le mot est ", word)
     }
 }
 
@@ -98,5 +90,4 @@ const HANGMAN_PICS: string[] = [
     "    +---+\n    O   |\n   /|\\  |\n   /    |\n       ===",
     "    +---+\n    O   |\n   /|\\  |\n   / \\  |\n       ==="]
 
-
-console.log(game())
+game()
