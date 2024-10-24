@@ -58,14 +58,14 @@ function RPS() {
 
     while (win(int_player(player1), player2) != 1) {
         if (win(int_player(player1), player2) == 0) {
-            console.log("Match null egalite:p1=",player1," et p2=",choix[player2])
+            console.log("Match null egalite:p1=", player1, " et p2=", choix[player2])
             player1 = readSync.question("rock paper or scissor\nEntrez votre choix:").toLocaleLowerCase()
             while (int_player(player1) == -1) {
                 player1 = readSync.question("Input incorrect\nrock paper or scissor\nEntrez votre choix:").toLocaleLowerCase()
             }
-            player2 = Math.floor(Math.random() * 2)
+            player2 = Math.floor(Math.random() * 3)
         } else {
-            console.log("L'ordinateur gagne ",choix[player2], " bat ", player1)
+            console.log("L'ordinateur gagne ", choix[player2], " bat ", player1)
             player1 = readSync.question("rock paper or scissor\nEntrez votre choix:").toLocaleLowerCase()
             while (int_player(player1) == -1) {
                 player1 = readSync.question("Input incorrect\nrock paper or scissor\nEntrez votre choix:").toLocaleLowerCase()
@@ -73,7 +73,7 @@ function RPS() {
             player2 = Math.floor(Math.random() * 2)
         }
 
-        if (win(int_player(player1), player2) == 1 ) console.log("Felicitation vous avez gagnez\np1=",player1," et p2=",choix[player2])
+        if (win(int_player(player1), player2) == 1) console.log("Felicitation vous avez gagnez\np1=", player1, " et p2=", choix[player2])
     }
 
 }
